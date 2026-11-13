@@ -1,5 +1,5 @@
 {"name":"spike","owner":{"name":"spike"},"plugins":[
-{"name":"va","source":"../plugins/va","description":"mcpb node-type"},
-{"name":"vb","source":"../plugins/vb","description":"downloading launcher"},
-{"name":"vb-exe","source":"../plugins/vb-exe","description":"downloading launcher, explicit .exe"},
-{"name":"vc","source":"../plugins/vc","description":"runtime bundled in plugin"}]}
+{"name":"va","source":"./plugins/va","description":"mcpb node-type"},
+{"name":"vb","source":"./plugins/vb","description":"downloading launcher"},
+{"name":"vb-exe","source":"./plugins/vb-exe","description":"downloading launcher, explicit .exe"},
+{"name":"vc","source":"./plugins/vc","description":"runtime bundled in plugin"}]}
