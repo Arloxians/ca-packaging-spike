@@ -3,7 +3,7 @@ import json, subprocess, sys, threading, time
 cmd = sys.argv[1:]
 t0 = time.time()
 p = subprocess.Popen(cmd, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=sys.stderr, text=True)
-threading.Timer(240, p.kill).start()
+_t = threading.Timer(240, p.kill); _t.daemon = True; _t.start()
 def send(o): p.stdin.write(json.dumps(o) + "\n"); p.stdin.flush()
 send({"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2025-06-18","capabilities":{},"clientInfo":{"name":"spike","version":"0"}}})
 ok = False
