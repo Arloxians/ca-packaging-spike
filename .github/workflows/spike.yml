@@ -1,0 +1,36 @@
+name: spike
+on: [push, workflow_dispatch]
+jobs:
+  spike:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-14, macos-13, windows-latest, ubuntu-latest, ubuntu-24.04-arm]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        if: runner.os == 'Windows'
+        with: { go-version: '1.22' }
+      - name: Install Claude Code (unix)
+        if: runner.os != 'Windows'
+        run: curl -fsSL https://claude.ai/install.sh | bash && echo "$HOME/.local/bin" >> $GITHUB_PATH
+      - name: Install Claude Code (windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          irm https://claude.ai/install.ps1 | iex
+          "$env:USERPROFILE\.local\bin" | Out-File -Append -Encoding utf8 $env:GITHUB_PATH
+      - name: Hide Node
+        shell: bash
+        run: bash ci/hide-node.sh
+      - name: Marketplace add
+        shell: bash
+        run: claude --version && claude plugin marketplace add ./marketplace
+      - name: Variants
+        shell: bash
+        run: |
+          fail=0
+          for v in va vb vb-exe vc; do bash ci/run-variant.sh $v 2>&1 | tee /tmp/$v.log || true; done
+          grep -h "RESULT\|SIZE\|size:\|took\|elapsed_s\|^[0-9]\{10\} " /tmp/va.log /tmp/vb.log /tmp/vb-exe.log /tmp/vc.log | tee -a $GITHUB_STEP_SUMMARY

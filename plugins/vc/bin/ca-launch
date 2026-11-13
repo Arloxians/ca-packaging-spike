@@ -1,0 +1,4 @@
+#!/bin/sh
+# Variant C launcher: node binary and app are inside the plugin, nothing downloaded.
+HERE=$(cd "$(dirname "$0")/.." && pwd)
+exec "$HERE/runtime/node" "$HERE/runtime/hello.cjs"

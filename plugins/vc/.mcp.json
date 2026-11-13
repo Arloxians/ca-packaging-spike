@@ -1,0 +1,1 @@
+{"mcpServers":{"hello":{"command":"${CLAUDE_PLUGIN_ROOT}/bin/ca-launch"}}}

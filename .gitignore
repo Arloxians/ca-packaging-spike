@@ -1,0 +1,3 @@
+node_modules
+plugins/vc/runtime
+plugins/*/bin/ca-launch.exe
