@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 # usage: run-variant.sh <variant>   (runs from repo root, node already hidden)
+command -v timeout >/dev/null || timeout() { shift; "$@"; }
 v=$1; root=$PWD
 echo "::group::variant $v"
 case "$OSTYPE" in msys*|cygwin*) WIN=1;; *) WIN=0;; esac
